@@ -4,9 +4,12 @@
 
 package frc.robot;
 
+import org.ejml.dense.row.linsol.AdjustableLinearSolver_DDRM;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.romi.OnBoardIO;
 import edu.wpi.first.wpilibj.romi.OnBoardIO.ChannelMode;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -14,10 +17,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.autons.ExampleAuton;
+import frc.robot.autons.BlueAutons;
+import frc.robot.autons.RedAutons;
 import frc.robot.driveCommands.ArcadeDrive;
 import frc.robot.driveCommands.TankDrive;
 import frc.robot.subsystems.Drivetrain;
+
+import frc.robot.enums.QUADRANT;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -25,6 +31,7 @@ import frc.robot.subsystems.Drivetrain;
  * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
  * subsystems, commands, and button mappings) should be declared here.
  */
+
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Drivetrain m_drivetrain = new Drivetrain();
@@ -35,7 +42,6 @@ public class RobotContainer {
 
   // Create SmartDashboard chooser for autonomous routines
   private final SendableChooser<Command> m_chooser = new SendableChooser<>();
-
   // NOTE: The I/O pin functionality of the 5 exposed I/O pins depends on the hardware "overlay"
   // that is specified when launching the wpilib-ws server on the Romi raspberry pi.
   // By default, the following are available (listed in order from inside of the board to outside):
@@ -72,7 +78,11 @@ public class RobotContainer {
         .onFalse(new PrintCommand("Button A Released"));
 
     // Setup SmartDashboard options
-    m_chooser.setDefaultOption("Example Auton", new ExampleAuton(m_drivetrain));
+    m_chooser.setDefaultOption("Red Triangle", new RedAutons(m_drivetrain, QUADRANT.TRIANGLE));
+    m_chooser.addOption("Red Curve", new RedAutons(m_drivetrain, QUADRANT.CURVE));
+
+    m_chooser.addOption("Blue Triangle", new BlueAutons(m_drivetrain, QUADRANT.TRIANGLE));
+    m_chooser.addOption("Blue Curve", new BlueAutons(m_drivetrain, QUADRANT.CURVE));
     
     /* ROOKIES, ADD YOUR AUTONS HERE!
      * EX:

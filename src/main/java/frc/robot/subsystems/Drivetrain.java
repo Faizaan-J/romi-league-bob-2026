@@ -83,7 +83,7 @@ public class Drivetrain extends SubsystemBase {
 
   public double getAverageDistanceInch() {
     return (getLeftDistanceInch() + getRightDistanceInch()) / 2.0;
-  }
+  } 
 
   /**
    * The acceleration in the X-axis.
