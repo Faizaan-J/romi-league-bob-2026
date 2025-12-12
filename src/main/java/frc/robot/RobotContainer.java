@@ -4,12 +4,10 @@
 
 package frc.robot;
 
-import org.ejml.dense.row.linsol.AdjustableLinearSolver_DDRM;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.romi.OnBoardIO;
 import edu.wpi.first.wpilibj.romi.OnBoardIO.ChannelMode;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -34,14 +32,14 @@ import frc.robot.enums.QUADRANT;
 
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final Drivetrain m_drivetrain = new Drivetrain();
-  private final OnBoardIO m_onboardIO = new OnBoardIO(ChannelMode.INPUT, ChannelMode.INPUT);
+  private final Drivetrain driveTrain = new Drivetrain();
+  private final OnBoardIO onBoardIO = new OnBoardIO(ChannelMode.INPUT, ChannelMode.INPUT);
 
   // Assumes a gamepad plugged into channel 0
-  private final Joystick m_controller = new Joystick(0);
+  private final Joystick controller = new Joystick(0);
 
   // Create SmartDashboard chooser for autonomous routines
-  private final SendableChooser<Command> m_chooser = new SendableChooser<>();
+  private final SendableChooser<Command> autonChooser = new SendableChooser<>();
   // NOTE: The I/O pin functionality of the 5 exposed I/O pins depends on the hardware "overlay"
   // that is specified when launching the wpilib-ws server on the Romi raspberry pi.
   // By default, the following are available (listed in order from inside of the board to outside):
@@ -69,27 +67,27 @@ public class RobotContainer {
     // Default command is arcade drive. This will run unless another command
     // is scheduled over it.
     // m_drivetrain.setDefaultCommand(getArcadeDriveCommand());
-    m_drivetrain.setDefaultCommand(getTankDriveCommand());
+    driveTrain.setDefaultCommand(getTankDriveCommand());
 
     // Example of how to use the onboard IO
-    Trigger onboardButtonA = new Trigger(m_onboardIO::getButtonAPressed);
+    Trigger onboardButtonA = new Trigger(onBoardIO::getButtonAPressed);
     onboardButtonA
         .onTrue(new PrintCommand("Button A Pressed"))
         .onFalse(new PrintCommand("Button A Released"));
 
     // Setup SmartDashboard options
-    m_chooser.setDefaultOption("Red Triangle", new RedAutons(m_drivetrain, QUADRANT.TRIANGLE));
-    m_chooser.addOption("Red Curve", new RedAutons(m_drivetrain, QUADRANT.CURVE));
+    autonChooser.setDefaultOption("Red Triangle", new RedAutons(driveTrain, QUADRANT.TRIANGLE));
+    autonChooser.addOption("Red Curve", new RedAutons(driveTrain, QUADRANT.CURVE));
 
-    m_chooser.addOption("Blue Triangle", new BlueAutons(m_drivetrain, QUADRANT.TRIANGLE));
-    m_chooser.addOption("Blue Curve", new BlueAutons(m_drivetrain, QUADRANT.CURVE));
+    autonChooser.addOption("Blue Triangle", new BlueAutons(driveTrain, QUADRANT.TRIANGLE));
+    autonChooser.addOption("Blue Curve", new BlueAutons(driveTrain, QUADRANT.CURVE));
     
     /* ROOKIES, ADD YOUR AUTONS HERE!
      * EX:
      * m_chooser.addOption("YOUR AUTO NAME", new YourAutonomous(m_drivetrain));
     */
 
-    SmartDashboard.putData(m_chooser);
+    SmartDashboard.putData("Auton", autonChooser);
   }
 
   /**
@@ -98,7 +96,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return m_chooser.getSelected();
+    return autonChooser.getSelected();
   }
 
   /**
@@ -108,11 +106,11 @@ public class RobotContainer {
    */
   public Command getArcadeDriveCommand() {
     return new ArcadeDrive(
-        m_drivetrain, () -> -m_controller.getRawAxis(1), () -> -m_controller.getRawAxis(0));
+        driveTrain, () -> -controller.getRawAxis(1), () -> -controller.getRawAxis(0));
   }
 
   public Command getTankDriveCommand() {
     return new TankDrive(
-        m_drivetrain, () -> -m_controller.getRawAxis(1), () -> -m_controller.getRawAxis(0));
+        driveTrain, () -> -controller.getRawAxis(1), () -> -controller.getRawAxis(0));
   }
 }
