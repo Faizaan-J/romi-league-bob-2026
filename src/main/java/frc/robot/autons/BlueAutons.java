@@ -26,7 +26,15 @@ public class BlueAutons extends SequentialCommandGroup {
     }
 
     private void registerBlueTriangle() {
-
+        addCommands(
+            new DriveDistance(1, 18.61, drivetrain),
+            new DriveTurn( 1, 90, 0, drivetrain ),
+            new DriveDistance(1, 10.61, drivetrain),
+            new DriveTurn( 1, -90, 0, drivetrain),
+            new DriveDistance(1, 19, drivetrain ),
+            new DriveTurn(1, 57.3, 0, drivetrain),
+            new DriveTrain()
+        );
     }
 
     public BlueAutons(Drivetrain drivetrain, QUADRANT quadrant) {
