@@ -11,17 +11,17 @@ public class BlueAutons extends SequentialCommandGroup {
 
     private void registerBlueCurve() {
         addCommands(
-            new DriveDistance(1, 9, drivetrain),
-            new DriveTurn(1, 90, 0, drivetrain),
-            new DriveDistance(1, 13.73, drivetrain),
-            new DriveTurn(1, 90, 0, drivetrain),
-            new DriveDistance(1, 10.5, drivetrain),
+            new DriveDistance(1, 2, drivetrain),
+            new DriveTurn(0.5, -90, 0, drivetrain),
+            new DriveDistance(1, 6.73, drivetrain),
             new DriveTurn(1, -90, 0, drivetrain),
-            new DriveDistance(1, 12.6, drivetrain),
-            new DriveTurn(1, -90, 0, drivetrain),
-            new DriveDistance(1, 8, drivetrain),
+            new DriveDistance(1, 4.5, drivetrain),
             new DriveTurn(1, 90, 0, drivetrain),
-            new DriveTurn(1, 26.3, 9.62, drivetrain)
+            new DriveDistance(1, 6.6, drivetrain),
+            new DriveTurn(1, 90, 0, drivetrain),
+            new DriveDistance(1, 2, drivetrain),
+            new DriveTurn(1, -90, 0, drivetrain),
+            new DriveTurn(1, -26.3, 6.62, drivetrain)
         );
     }
 
@@ -32,8 +32,7 @@ public class BlueAutons extends SequentialCommandGroup {
             new DriveDistance(1, 10.61, drivetrain),
             new DriveTurn( 1, -90, 0, drivetrain),
             new DriveDistance(1, 19, drivetrain ),
-            new DriveTurn(1, 57.3, 0, drivetrain),
-            new DriveTrain()
+            new DriveTurn(1, 57.3, 0, drivetrain)
         );
     }
 
